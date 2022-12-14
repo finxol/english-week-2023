@@ -2,26 +2,27 @@
 interface Speaker {
     name: string,
     title: string,
+    description?: string,
     date: string,
     url?: string,
     linkedin?: string,
     img: string,
-    description?: string,
 }
 
 let speakers: Speaker[] = [
     {
         name: "Ayça Atabey",
         title: "Data protection, AI, and human rights issues",
+        description: `This presentation will be a talk about a very interesting subject.`,
         date: "2023-02-01T17:45:00.000+01:00",
         url: "https://www.turing.ac.uk/people/enrichment-students/ayca-atabey",
         linkedin: "https://www.linkedin.com/in/ayca-atabey/",
         img: "https://www.turing.ac.uk/sites/default/files/styles/people/public/2022-08/ayca_atabey.jpg?itok=kyLTNTBb",
-        description: `This presentation will be a talk about a very interesting subject.`
     },
     {
         name: "Nicholas Boucher",
-        title: "Untitled talk about adversarially encoding text to cause errors",
+        title: "Invisible Hacks Against Machine Learning & Source Code",
+        description: "Adversarially encoding text can cause lots of problems. In this talk, we will explore recent research into attacking real-world systems ranging from machine learning models to compilers by leveraging obscure text encodings.",
         date: "2023-01-30T17:45:00.000+01:00",
         linkedin: "https://www.linkedin.com/in/bouchernicholas/",
         img: "https://www.cl.cam.ac.uk/~ndb40/assets/img/boucher.webp?h=8fa366f4b743a2c305532241cd0d30ea",
@@ -29,11 +30,11 @@ let speakers: Speaker[] = [
     {
         name: "Colin Ozanne",
         title: "Web design and front-end development",
+        description: `Colin will present some general web front-end design principle, along with a concrete design example.`,
         date: "2023-02-05T05:00:00.000+01:00",
         url: "https://colinozanne.fr/",
         linkedin: "https://www.linkedin.com/in/colin-ozanne-99594822a/",
         img: "https://avatars.githubusercontent.com/u/71637999?v=4",
-        description: `Colin will present some general web front-end design principle, along with a concrete design example.`,
     }
 ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
