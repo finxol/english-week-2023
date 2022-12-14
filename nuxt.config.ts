@@ -1,20 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     telemetry: false,
-    modules: [
+    /*modules: [
         '@nuxt/image-edge',
-    ],
-    image: {
-        provider: 'static',
-        presets: {
-            cover: {
-                modifiers: {
-                    fit: "cover",
-                    format: "webp",
-                },
-            },
-        },
-    },
+    ],*/
     app: {
         head: {
             title: 'English Week 2023',

@@ -21,7 +21,7 @@ let speakers: Speaker[] = [
     },
     {
         name: "Nicholas Boucher",
-        title: "TBD talk about security on mobile devices",
+        title: "Untitled talk about adversarially encoding text to cause errors",
         date: "2023-01-30T17:45:00.000+01:00",
         linkedin: "https://www.linkedin.com/in/bouchernicholas/",
         img: "https://www.cl.cam.ac.uk/~ndb40/assets/img/boucher.webp?h=8fa366f4b743a2c305532241cd0d30ea",
@@ -80,11 +80,15 @@ onBeforeMount(() => {
                 and a <span class="red">quiz</span>!<br>
                 <small>From <b>30th January</b> to <b>3rd February</b></small>
             </p>
-            <nuxt-img
-                src="/english-week.png"
-                alt="English Week 2023"
-                preset="optimise"
-            />
+            <picture>
+                <source
+                    srcset="/english-week.webp"
+                >
+                <img
+                    src="/english-week.png"
+                    alt="English Week 2023"
+                />
+            </picture>
         </div>
 
         <!-- set to 1 week before first stream -->
@@ -123,7 +127,7 @@ onBeforeMount(() => {
             class="speakers"
             id="speakers"
         >
-            <h2>Speakers</h2>
+            <h2>Talks</h2>
             <small>All times are shown in CET (Central European Time)</small>
             <section>
                 <div
@@ -144,6 +148,7 @@ onBeforeMount(() => {
                                 :href="speaker.url"
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                :aria-label="`${speaker.name} Website`"
                             >
                                 {{ speaker.name }}
                             </a>
@@ -154,6 +159,7 @@ onBeforeMount(() => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="linkedin"
+                                :aria-label="`${speaker.name} LinkedIn Profile`"
                             >
                                 <font-awesome-icon
                                     icon="fa-brands fa-linkedin"
