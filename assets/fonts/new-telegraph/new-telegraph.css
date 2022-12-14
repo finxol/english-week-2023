@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'NewTelegraphBold';
+    src: url('NewTelegraphBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NewTelegraph';
+    src: url('NewTelegraphRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
