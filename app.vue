@@ -16,7 +16,7 @@ const toggleMenu = () => {
 
             <aside>
                 <div class="menu">
-                    <font-awesome-icon icon="fa-solid fa-bars-staggered" @click="toggleMenu" />
+                    <font-awesome-icon icon="fa-solid fa-bars-staggered" @click="toggleMenu"/>
                 </div>
                 <nav>
                     <NuxtLink to="#about">About</NuxtLink>
@@ -27,30 +27,41 @@ const toggleMenu = () => {
         </header>
 
         <main>
-            <NuxtPage />
+            <NuxtPage/>
         </main>
 
         <footer>
             <section id="links">
                 <a href="https://www.iutvannes.fr" target="_blank" rel="noopener noreferrer">
-                    <img src="/logo_iut_vannes_white.png" alt="IUT Vannes">
+                    <picture>
+                        <source
+                            srcset="/logo_iut_vannes_white.webp"
+                            type="image/webp"
+                        />
+                        <img src="/logo_iut_vannes_white.png" alt="IUT Vannes">
+                    </picture>
                 </a>
             </section>
             <p>
                 &copy; <span class="gradient">2023</span> BDE KrHacken
+                —
+                <a href="https://github.com/finxol" target="_blank" rel="noopener noreferrer">
+                    finxol</a>
+                &amp;
+                <a href="https://github.com/IceCreammms" target="_blank" rel="noopener noreferrer">
+                    IceCreammms</a>
             </p>
         </footer>
     </div>
 </template>
 
-<style id="fonts">
+<style lang="scss">
+// fonts
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Six+Caps&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-</style>
 
-<style lang="scss">
 @import 'assets/fonts/new-telegraph/new-telegraph.css';
 @import "assets/css/main.scss";
 
@@ -86,7 +97,7 @@ body {
     background-color: $black;
     background-size: cover;
     color: $black;
-    overflow: overlay;
+    overflow: auto;
     overflow-x: hidden;
 
     * {
@@ -146,7 +157,7 @@ body {
 
         }
 
-        nav>a {
+        nav > a {
             margin: 0 1rem;
             text-decoration: none;
             color: $white;
@@ -200,6 +211,12 @@ body {
 
             img {
                 height: 3rem;
+            }
+        }
+
+        p {
+            a {
+                color: $white;
             }
         }
     }
