@@ -54,7 +54,7 @@ const parseDate = (date: string) => {
 
 let nextSpeaker = speakers.find(speaker => new Date(speaker.date).getTime() > Date.now());
 
-const delay = ({hours = 0, days = 0, date = Date.now()} = {}) => {
+const delay = ({ hours = 0, days = 0, date = Date.now() } = {}) => {
     let d = new Date(date);
     d.setHours(d.getHours() - hours)
     d.setDate(d.getDate() - days)
@@ -76,98 +76,90 @@ onBeforeMount(() => {
 <template>
     <div class="page">
         <div class="head">
-            <p>
-                Join us for <span class="blue">conferences</span><br>
-                and a <span class="red">quiz</span>!<br>
-                <small>From <b>30th January</b> to <b>3rd February</b></small>
+            <!--<p class="primary-text">
+                Join us for <span class="gradient strong">conferences</span><br>
+                and a <span class="gradient strong">quiz</span>!<br>
+            </p>-->
+
+            <p class="primary-text">
+                <span class="Line1">English</span>
+                <span class="Line2">Week <span class="gradient">2023</span></span>
             </p>
-            <picture>
-                <source
-                    srcset="/english-week.webp"
-                >
-                <img
-                    src="/english-week.png"
-                    alt="English Week 2023"
-                />
-            </picture>
+
+            <p class="secondary-text">
+                <span class="description">When & Where ?</span><br>
+                <span class="date">January 30 <span class="gradient">•</span> February 3 <br> <span
+                        class="gradient">Online</span></span>
+            </p>
+
         </div>
 
         <!-- set to 1 week before first stream -->
-        <div
-            v-if="new Date() > delay({days: 7, date: nextSpeaker.date})"
-            class="stream"
-        >
-            <p
-                class="next"
-            >
+        <div v-if="new Date() > delay({ days: 7, date: nextSpeaker.date })" class="stream">
+            <p class="next">
                 Next talk will be from <b>{{ nextSpeaker.name }}</b> on <b>{{ parseDate(nextSpeaker.date) }}</b>
             </p>
 
 
         </div>
+        <div id="about" class="scroll-anchor"></div>
+        <div class="intro">
+            <span class="about-title">What exactly is the <br><span class="gradient strong">english week ?</span></span>
+            <ol class="about-content">
+                <li>
+                    The English Week is the perfect opportunity to improve your English skills and learn more about the
+                    world of IT.<br>
+                </li>
+                <li>
+                    Each year, the student committee of the computer science department organizes a week of conferences
+                    and a quiz and every teachers are encouraged to teach their regular class in english
+                </li>
+                <li>
+                    A great lineup of speakers to talk about various subjects, ranging from
+                    cybersecurity to web design, data protection and even AI!
+                    With these talk, you get to learn more about these topics, and also improve your English skills!
 
-        <div
-            class="intro"
-            id="about"
-        >
-            <p>
-                The English Week is the perfect opportunity to improve your English skills and learn more about the
-                world of IT.
-                Each year, the student committee of the computer science department organizes a week of conferences and
-                a quiz, and encourages teachers to teach their regular classes in English.
-            </p>
-            <p>
-                This year, KrHacken invited a great lineup of speakers to talk about various subjects, ranging from
-                cybersecurity to web design to data protection and AI!
-                With these talk, you get to learn more about these topics, and also improve your English skills!
+                </li>
+                <hr class="separator-small">
+                <div class="small">Every speakers are invited by the computer science department student committee
+                    therefore they are not always affiliated with the school.</div>
+            </ol>
 
-            </p>
         </div>
 
-        <div
-            class="speakers"
-            id="speakers"
-        >
+        <div class="speakers" id="speakers">
             <h2>Talks</h2>
             <small>All times are shown in CET (Central European Time)</small>
-            <section>
-                <div
-                    class="speaker"
-                    v-for="speaker in speakers"
-                    :key="speaker.name"
-                >
-                    <img
-                        :src="speaker.img.includes('https://') ? speaker.img : `/speakers/${speaker.img}`"
-                        :alt="speaker.name"
-                    >
-                    <div class="info">
-                        <h3>{{ speaker.title }}</h3>
-                        <small>{{ parseDate(speaker.date) }}</small>
-                        <h4>
-                            <a
-                                v-if="speaker.url"
-                                :href="speaker.url"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                :aria-label="`${speaker.name} Website`"
-                            >
-                                {{ speaker.name }}
-                            </a>
-                            <span v-else>{{ speaker.name }}</span>
-                            <a
-                                v-if="speaker.linkedin"
-                                :href="speaker.linkedin"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="linkedin"
-                                :aria-label="`${speaker.name} LinkedIn Profile`"
-                            >
-                                <font-awesome-icon
-                                    icon="fa-brands fa-linkedin"
-                                />
-                            </a>
-                        </h4>
-                        <p v-if="speaker.description">{{ speaker.description }}</p>
+            <section class="speaker-container">
+                <!--
+                <div class="speaker" v-for="speaker in speakers" :key="speaker.name">
+                    <div class="speaker-card">
+                        <div class="speaker-title">{{ speaker.title }}</div>
+                        
+                        <div class="speaker-info">
+                            <img :src="speaker.img.includes('https://') ? speaker.img : `/speakers/${speaker.img}`"
+                                :alt="speaker.name" class="speaker-img">
+                            <div class="speaker-name">{{ speaker.name }}</div>
+                            <div class="speaker-date">{{ parseDate(speaker.date) }}</div>
+                        </div>
+                    </div>
+                </div>
+                -->
+
+                <div class="speaker" v-for="speaker in speakers" :key="speaker.name">
+                    <div class="speaker-card">
+                        <div class="speaker-first">
+                            <div class="speaker-image">
+                                <img :src="speaker.img.includes('https://') ? speaker.img : `/speakers/${speaker.img}`"
+                                    :alt="speaker.name">
+                            </div>
+                            <div class="speaker-name">{{ speaker.name }}</div>
+                        </div>
+                        <div class="speaker-info">
+                            <div class="speaker-title">{{ speaker.title }}</div>
+                            <div class="speaker-date">{{ parseDate(speaker.date) }}</div>
+                        </div>
+
                     </div>
                 </div>
             </section>
@@ -178,29 +170,93 @@ onBeforeMount(() => {
 <style scoped lang="scss">
 @import 'assets/css/main.scss';
 
+
+.scroll-anchor {
+    visibility: hidden;
+    position: relative;
+    top: -150px;
+}
+
+.gradient {
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.strong {
+    font-weight: 600;
+}
+
 div.page {
     padding-top: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
 
     div.head {
         width: 100%;
         display: flex;
+        height: 60vh;
         flex-direction: row;
         justify-content: space-evenly;
-        align-items: center;
-        text-align: center;
         margin: 1rem 3rem;
+        color: $white;
+        margin-bottom: 20rem;
 
         @media screen and (max-width: 768px) {
             flex-direction: column;
             margin-top: 0;
         }
 
+        .primary-text {
+            max-width: 60rem;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 7.5rem;
+            letter-spacing: .1rem;
+            align-self: center;
+
+            .Line1 {
+                display: block;
+                text-align: left;
+            }
+
+            .Line2 {
+                display: block;
+                text-align: right;
+                padding-left: 4rem;
+            }
+        }
+
+        .secondary-text {
+            align-self: end;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #ffffffb3;
+
+            .description {
+                display: inline-block;
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: rem;
+                text-align: left;
+            }
+
+            .date {
+                display: inline-block;
+                font-size: 2rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                text-align: left;
+            }
+        }
+
         p {
-            width: 35%;
+            width: 40%;
             font-size: 2.7rem;
 
             @media screen and (max-width: 768px) {
@@ -208,9 +264,6 @@ div.page {
                 font-size: 2rem;
             }
 
-            span {
-                font-family: 'NewTelegraphBold', sans-serif;
-            }
 
             span.blue {
                 color: $blue;
@@ -221,7 +274,7 @@ div.page {
             }
 
             small {
-                font-size: 1.3rem;
+                font-size: 2.5rem;
             }
         }
 
@@ -229,6 +282,7 @@ div.page {
             width: 15rem;
         }
     }
+
 
     div.stream {
         width: 100%;
@@ -255,13 +309,14 @@ div.page {
 
     div.intro {
         width: 100%;
+        height: 70vh;
         padding: 1rem 9rem;
-        margin: 4rem 0 0;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-evenly;
         gap: 2rem;
-        background-color: rgba($blue, .1);
+        background-color: $black;
+        color: $white;
 
         @media screen and (max-width: 768px) {
             padding: 1rem 2rem;
@@ -269,10 +324,65 @@ div.page {
             gap: 0;
         }
 
+        .about-title {
+            display: block;
+            font-size: 2.7rem;
+            font-family: 'Inter', sans-serif;
+            color: $white;
+            width: 100%;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            counter-reset: li;
+
+            li {
+                counter-increment: li;
+                font-size: 1.3rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            li::marker {
+                visibility: hidden;
+            }
+
+            li::before {
+                content: counter(li) '';
+                background: linear-gradient(120deg, rgba(253, 29, 29, 1) 0%, rgb(69, 69, 252) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                display: inline-block;
+                width: 1em;
+                margin-left: -1em;
+                font-size: 4rem;
+                font-weight: 600;
+                margin-right: 1rem;
+            }
+
+            .small {
+                font-size: 1rem;
+                color: #ffffffb3;
+            }
+
+            .separator-small {
+                width: 100%;
+                height: 1px;
+                background-color: #ffffffb3;
+            }
+
+
+
+        }
+
         p {
             width: 100%;
-            font-size: 1.1rem;
-            text-wrap: normal;
+            font-size: 1.4rem;
             text-align: justify;
         }
     }
@@ -285,7 +395,7 @@ div.page {
         h2 {
             font-size: 2.7rem;
             font-family: 'NewTelegraphBold', sans-serif;
-            color: $blue;
+            color: $white;
             margin-bottom: 1rem;
         }
 
@@ -296,130 +406,86 @@ div.page {
         }
 
         section {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: space-between;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            white-space: nowrap;
+            width: 100vw;
+            left: 0px;
+
+            .speaker {
+                display: inline-block;
+                height: 50vh;
+                width: 600px;
+                margin-right: 5vh;
+                margin-left: 5vh;
+                color: $white;
 
 
-            div.speaker {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-evenly;
-                align-items: center;
-                margin: 0;
-                padding: 1rem 1rem;
-                width: clamp(15rem, calc(50% - 1rem), 50rem);
-
-                background-color: rgba($blue, .07);
-                border-radius: .5rem;
-                box-shadow: 0 0 1rem rgba(0, 0, 0, .08);
-                transition: box-shadow .2s ease-in-out;
-                opacity: 0;
-
-                animation: appear .6s;
-                animation-timing-function: ease-out;
-                animation-iteration-count: 1;
-                animation-fill-mode: forwards;
-
-                @for $i from 0 to 3 {
-                    &:nth-child(#{$i + 1}) {
-                        animation-delay: $i * .1s;
-                    }
-                }
-
-                @keyframes appear {
-                    0% {
-                        opacity: 0;
-                        transform: translateY(1rem);
-                    }
-                    100% {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-
-                &:hover {
-                    box-shadow: 0 0 1rem rgba(0, 0, 0, .1);
-                }
-
-                @media screen and (max-width: 768px) {
+                .speaker-card {
+                    display: flex;
                     flex-direction: column;
-                    width: 100%;
-                    margin: .5rem 0;
-                }
+                    justify-content: space-evenly;
 
-                &:nth-child(even) {
-                    flex-direction: row-reverse;
-
-                    @media screen and (max-width: 768px) {
-                        flex-direction: column;
-                    }
-                }
-
-                img {
-                    width: 8rem;
-                    aspect-ratio: 1;
-                    border-radius: 50%;
-                    object-fit: cover;
-                }
-
-                div.info {
-                    width: 70%;
-                    margin-left: 2rem;
-
-                    @media screen and (max-width: 768px) {
-                        width: 100%;
-                        margin: 1rem 0 0;
-                    }
-
-                    h3 {
-                        margin: 0;
-                        font-size: 1.8rem;
-                        font-family: 'NewTelegraphBold', sans-serif;
-                        color: $blue;
-                    }
-
-                    small {
-                        display: inline-block;
-                        margin: .8rem 0;
-                        color: $blue;
-                        font-size: 1.2rem;
-                        font-family: 'NewTelegraph', sans-serif;
-                    }
-
-                    a {
-                        text-decoration: none;
-                        color: inherit;
-                    }
-
-                    h4 {
-                        margin: 0 0 1rem;
-                        font-size: 1.3rem;
-                        font-family: 'NewTelegraph', sans-serif;
-                        color: $blue;
-
-                        a.linkedin {
-                            display: inline-block;
+                    .speaker-first {
+                        display: flex;
+                        flex-direction: row;
+                        height: 10vh;
+                        border: $white 2px solid;
+                        .speaker-name {
+                            font-size: 2rem;
+                            font-family: 'Inter', sans-serif;
+                            color: $white;
+                            margin-right: 1rem;
+                            align-self:center;
                             margin-left: 1rem;
-
-                            &:hover {
-                                transform: none;
-                            }
                         }
                     }
 
-                    p {
-                        font-size: 1.1rem;
-                        margin: 0;
+                    .speaker-info {
+                        display: flex;
+                        flex-direction: column;
+                        height: 10vh;
+                        
 
-                        @media screen and (max-width: 768px) {
+                        .speaker-title {
+                            padding: 30px;
+                            font-size: 1.2rem;
+                            font-family: 'Inter', sans-serif;
+                            color: $white;
+                            align-self:center;
+                            border: $white 2px solid;
+                            width: 100%;
+                            border-top: none;
+                        }
+
+                        .speaker-date {
+                            padding: 20px;
                             font-size: 1rem;
+                            font-family: 'Inter', sans-serif;
+                            color: $white;
+                            width: 100%;
+                            border: $white 2px solid;
+                            border-top: none;
+                            text-align: end;
+                            
                         }
                     }
+
+
+
+                }
+
+
+
+
+
+                .speaker-image img {
+                    object-fit: cover;
+                    width: 100%;
+                    height: 100%;
                 }
             }
+
         }
     }
 }
