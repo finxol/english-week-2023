@@ -7,9 +7,10 @@ interface Speaker {
     url?: string,
     linkedin?: string,
     img: string,
+    expand: boolean
 }
 
-let speakers: Speaker[] = [
+let speakers: Speaker[] = reactive([
     {
         name: "Ayça Atabey",
         title: "Data protection, AI, and human rights issues",
@@ -18,6 +19,7 @@ let speakers: Speaker[] = [
         url: "https://www.turing.ac.uk/people/enrichment-students/ayca-atabey",
         linkedin: "https://www.linkedin.com/in/ayca-atabey/",
         img: "https://www.turing.ac.uk/sites/default/files/styles/people/public/2022-08/ayca_atabey.jpg?itok=kyLTNTBb",
+        expand: false,
     },
     {
         name: "Nicholas Boucher",
@@ -26,17 +28,19 @@ let speakers: Speaker[] = [
         date: "2023-01-30T17:45:00.000+01:00",
         linkedin: "https://www.linkedin.com/in/bouchernicholas/",
         img: "https://www.cl.cam.ac.uk/~ndb40/assets/img/boucher.webp?h=8fa366f4b743a2c305532241cd0d30ea",
+        expand: false,
     },
     {
         name: "Colin Ozanne",
-        title: "Web design and front-end development",
-        description: `Colin will present some general web front-end design principle, along with a concrete design example.`,
+        title: "Designing Effective Web Interfaces: Tips and Techniques",
+        description: `In this talk, we will explore the key principles of design and how they can be applied to create visually appealing and intuitive web interfaces. We will also delve into techniques for building responsive websites that work well on a variety of devices, and discuss the importance of accessibility and performance in web design. We will cover practical tips and techniques for optimizing the usability of your website, including how to create clear and concise content, design effective calls to action, and conduct user testing. By the end of the talk, you will have a solid understanding of how to design and build web interfaces that are both visually appealing and user-friendly.`,
         date: "2023-02-05T05:00:00.000+01:00",
         url: "https://colinozanne.fr/",
         linkedin: "https://www.linkedin.com/in/colin-ozanne-99594822a/",
         img: "https://avatars.githubusercontent.com/u/71637999?v=4",
+        expand: false,
     }
-].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+]).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
 
 const parseDate = (date: string) => {
@@ -138,36 +142,40 @@ onBeforeMount(() => {
             <h2>Talks</h2>
             <small>All times are shown in CET (Central European Time)</small>
             <section class="speaker-container">
-                <!--
-                <div class="speaker" v-for="speaker in speakers" :key="speaker.name">
-                    <div class="speaker-card">
-                        <div class="speaker-title">{{ speaker.title }}</div>
-
-                        <div class="speaker-info">
-                            <img :src="speaker.img.includes('https://') ? speaker.img : `/speakers/${speaker.img}`"
-                                :alt="speaker.name" class="speaker-img">
-                            <div class="speaker-name">{{ speaker.name }}</div>
-                            <div class="speaker-date">{{ parseDate(speaker.date) }}</div>
-                        </div>
+                <div
+                    class="speaker-card"
+                    v-for="speaker in speakers"
+                    :key="speaker.name"
+                >
+                    <div class="speaker-card-header">
+                        <img
+                            class="speaker-img"
+                            :src="speaker.img"
+                            :alt="speaker.name"
+                        />
+                        <p>
+                            {{ speaker.name }}
+                        </p>
                     </div>
-                </div>
-                -->
+                    <p class="container emph">
+                        {{ speaker.title }}
 
-                <div class="speaker" v-for="speaker in speakers" :key="speaker.name">
-                    <div class="speaker-card">
-                        <div class="speaker-first">
-                            <div class="speaker-image">
-                                <img :src="speaker.img.includes('https://') ? speaker.img : `/speakers/${speaker.img}`"
-                                     :alt="speaker.name">
-                            </div>
-                            <div class="speaker-name">{{ speaker.name }}</div>
-                        </div>
-                        <div class="speaker-info">
-                            <div class="speaker-title">{{ speaker.title }}</div>
-                            <div class="speaker-date">{{ parseDate(speaker.date) }}</div>
-                        </div>
-
-                    </div>
+                        <span
+                            class="expand-control"
+                            @click="speaker.expand = !speaker.expand"
+                        >
+                                {{ speaker.expand ? 'Read less' : 'Read more' }}
+                            </span>
+                    </p>
+                    <p
+                        class="container expand"
+                        v-if="speaker.expand"
+                    >
+                        {{ speaker.description }}
+                    </p>
+                    <p class="container">
+                        {{ parseDate(speaker.date) }}
+                    </p>
                 </div>
             </section>
         </div>
@@ -418,83 +426,77 @@ div.page {
         }
 
         section {
-            overflow-x: scroll;
-            overflow-y: hidden;
-            white-space: nowrap;
-            width: 100vw;
-            left: 0px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 0 2rem;
 
-            .speaker {
-                display: inline-block;
-                height: 50vh;
-                width: 600px;
-                margin-right: 5vh;
-                margin-left: 5vh;
-                color: $white;
+            .speaker-card {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: stretch;
+                align-self: flex-start;
+                text-align: justify;
 
+                width: 40rem;
+                border-radius: 1rem;
+                border: $white 2px solid;
+                overflow: hidden;
 
-                .speaker-card {
+                .speaker-card-header {
                     display: flex;
-                    flex-direction: column;
-                    justify-content: space-evenly;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
 
-                    .speaker-first {
-                        display: flex;
-                        flex-direction: row;
-                        height: 10vh;
-                        border: $white 2px solid;
+                    border-radius: 1rem 1rem 0 0;
+                    border: $white 1px solid;
 
-                        .speaker-name {
-                            font-size: 2rem;
-                            font-family: 'Inter', sans-serif;
-                            color: $white;
-                            margin-right: 1rem;
-                            align-self: center;
-                            margin-left: 1rem;
-                        }
+                    img {
+                        width: 10rem;
+                        aspect-ratio: 1;
+                        object-fit: cover;
                     }
 
-                    .speaker-info {
-                        display: flex;
-                        flex-direction: column;
-                        height: 10vh;
-
-
-                        .speaker-title {
-                            padding: 30px;
-                            font-size: 1.2rem;
-                            font-family: 'Inter', sans-serif;
-                            color: $white;
-                            align-self: center;
-                            border: $white 2px solid;
-                            width: 100%;
-                            border-top: none;
-                        }
-
-                        .speaker-date {
-                            padding: 20px;
-                            font-size: 1rem;
-                            font-family: 'Inter', sans-serif;
-                            color: $white;
-                            width: 100%;
-                            border: $white 2px solid;
-                            border-top: none;
-                            text-align: end;
-
-                        }
+                    p {
+                        margin: 0 4rem;
+                        font-size: 2rem;
+                        font-family: 'Inter', sans-serif;
                     }
-
-
                 }
 
+                p.container {
+                    margin: 0;
+                    border: $white 1px solid;
+                    padding: 1rem;
+                    font-size: 1rem;
+                    white-space: normal;
 
-                .speaker-image img {
-                    object-fit: cover;
-                    width: 100%;
-                    height: 100%;
+                    &.emph {
+                        padding: 2rem 1rem;
+                        font-size: 1.3rem;
+                    }
+
+                    &:last-child {
+                        padding-right: 2rem;
+                        text-align: right;
+                        border-radius: 0 0 1rem 1rem;
+                    }
+
+                    span.expand-control {
+                        display: block;
+                        margin-top: 1rem;
+                        font-size: .8rem;
+                        font-weight: 600;
+                        text-decoration: underline;
+                        text-align: center;
+                        cursor: pointer;
+                    }
                 }
             }
-
         }
     }
 }
