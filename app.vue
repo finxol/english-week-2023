@@ -96,7 +96,7 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: $black;
     background-size: cover;
-    color: $black;
+    color: $white;
     overflow: auto;
     overflow-x: hidden;
 
