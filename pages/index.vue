@@ -4,6 +4,7 @@ interface Speaker {
     title: string,
     description?: string,
     date: string,
+    confirmed?: boolean,
     url?: string,
     linkedin?: string,
     img: string,
@@ -26,6 +27,7 @@ let speakers: Speaker[] = reactive([
         title: "Invisible Hacks Against Machine Learning & Source Code",
         description: "Adversarially encoding text can cause lots of problems. In this talk, we will explore recent research into attacking real-world systems ranging from machine learning models to compilers by leveraging obscure text encodings.",
         date: "2023-01-30T17:45:00.000+01:00",
+        confirmed: true,
         linkedin: "https://www.linkedin.com/in/bouchernicholas/",
         img: "https://www.cl.cam.ac.uk/~ndb40/assets/img/boucher.webp?h=8fa366f4b743a2c305532241cd0d30ea",
         expand: false,
@@ -141,6 +143,7 @@ onBeforeMount(() => {
         <div class="speakers" id="speakers">
             <h2>Talks</h2>
             <small>All times are shown in CET (Central European Time)</small>
+            <small>Unconfirmed dates & times are marked with ~</small>
             <section class="speaker-container">
                 <div
                     class="speaker-card"
@@ -174,6 +177,7 @@ onBeforeMount(() => {
                         {{ speaker.description }}
                     </p>
                     <p class="container">
+                        {{ speaker.confirmed ? '' : '~ '}}
                         {{ parseDate(speaker.date) }}
                     </p>
                 </div>
@@ -431,7 +435,7 @@ div.page {
             justify-content: space-between;
             gap: 2rem;
             flex-wrap: wrap;
-            margin: 0 2rem;
+            margin: 2rem 2rem 0;
 
             .speaker-card {
                 display: flex;
