@@ -5,13 +5,16 @@ Colour palette :
 - Philippine Red : #d00c27
  */
 
-$black: #000515;
+$black: #111111;
 $white: #ffffff;
 $blue: #001f7e;
 $red: #d00c27;
+$transparent: transparent;
+$gradient: linear-gradient(90deg, rgba(253,29,29,1) 0%, rgb(69, 69, 252) 100%);
 
 $body-background: $white;
 $font-color: $black;
 $font-color-light: $white;
 
 $radius: .5rem;
+

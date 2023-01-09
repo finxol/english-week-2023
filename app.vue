@@ -11,16 +11,12 @@ const toggleMenu = () => {
     <div>
         <header>
             <NuxtLink to="/">
-                <h1>English Week 2023</h1>
+                <h1>English Week <span class="gradient">2023</span></h1>
             </NuxtLink>
 
             <aside>
-                <div class="skewed"></div>
                 <div class="menu">
-                    <font-awesome-icon
-                        icon="fa-solid fa-bars-staggered"
-                        @click="toggleMenu"
-                    />
+                    <font-awesome-icon icon="fa-solid fa-bars-staggered" @click="toggleMenu" />
                 </div>
                 <nav>
                     <NuxtLink to="#about">About</NuxtLink>
@@ -31,31 +27,52 @@ const toggleMenu = () => {
         </header>
 
         <main>
-            <NuxtPage/>
+            <NuxtPage />
         </main>
 
         <footer>
-            <section
-                id="links"
-            >
-                <a
-                    href="https://www.iutvannes.fr"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+            <section id="links">
+                <a href="https://www.iutvannes.fr" target="_blank" rel="noopener noreferrer">
                     <img src="/logo_iut_vannes_white.png" alt="IUT Vannes">
                 </a>
             </section>
             <p>
-                &copy; 2023 BDE KrHacken
+                &copy; <span class="gradient">2023</span> BDE KrHacken
             </p>
         </footer>
     </div>
 </template>
 
+<style id="fonts">
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Six+Caps&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+</style>
+
 <style lang="scss">
 @import 'assets/fonts/new-telegraph/new-telegraph.css';
 @import "assets/css/main.scss";
+
+::-webkit-scrollbar {
+    width: 20px;
+    left: -100px;
+}
+
+::-webkit-scrollbar-track {
+    background: $transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 10px 10px #b5b5b5;
+    border: solid 6px transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    box-shadow: inset 0 0 10px 10px #999999;
+    border: solid 6px transparent;
+}
 
 html {
     scroll-behavior: smooth;
@@ -65,119 +82,89 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    font-family: 'NewTelegraph', sans-serif;
-    background-color: $white;
+    font-family: 'Inter', sans-serif;
+    background-color: $black;
+    background-size: cover;
     color: $black;
+    overflow: overlay;
     overflow-x: hidden;
 
     * {
         box-sizing: border-box;
     }
 
-    a {
-        transition-duration: .2s;
-
-        &:hover {
-            transform: scale(1.04);
-        }
-
-        &:active {
-            transform: scale(0.95);
-        }
-    }
-
     header {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        grid-auto-rows: minmax(100%, auto);
         position: sticky;
         top: 0;
         z-index: 10;
-        justify-content: space-between;
         align-items: center;
-        padding: 1rem 0 1rem 4rem;
         height: 5rem;
         width: 100vw;
         overflow: hidden;
 
-        font-family: 'NewTelegraphBold', sans-serif;
-        background-color: $blue;
+        font-family: 'Poppins', sans-serif;
+        background-color: $black;
         color: $white;
 
         @media (max-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
             padding-left: 1.5rem;
             height: 4rem;
         }
 
         a {
-            color: $white;
+            grid-column: 2 / 2;
+            align-self: center;
+            justify-self: center;
             text-decoration: none;
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 0;
+            color: $white;
 
             @media (max-width: 768px) {
-                font-size: 1.5rem;
+                grid-column: 1 / 1;
+            }
+
+            .gradient {
+                background: $gradient;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
             }
         }
 
+
         aside {
+            grid-column: 3 / 3;
+            align-self: center;
+            justify-self: center;
             display: flex;
-            justify-content: right;
-            align-items: center;
 
-            div.skewed {
-                position: relative;
-                z-index: 1;
-                height: 5rem;
-                width: 5rem;
-                background-color: $red;
-                transform: skewX(45deg) translateX(2.5rem);
-
-                @media screen and (max-width: 768px) {
-                    width: 5rem;
-                    transform: skewX(25deg) translateX(2.5rem);
-                }
+            @media (max-width: 768px) {
+                grid-column: 2 / 2;
             }
 
-            div.menu {
-                /*position: relative;
-                z-index: 1;*/
+        }
+
+        nav>a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: $white;
+        }
+
+        nav {
+            @media (max-width: 768px) {
                 display: none;
-
-                @media screen and (max-width: 768px) {
-                    display: block;
-                }
             }
+        }
 
-            nav {
-                position: relative;
-                z-index: 1;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                gap: 2rem;
-                height: 5rem;
-                padding: 0 5rem 0 1rem;
-                background-color: $red;
+        .menu {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
 
-                @media screen and (max-width: 768px) {
-                    display: none;
-                }
-
-                a {
-                    padding: .5rem 1rem;
-                    border-radius: .2rem .2rem 0 0;
-                    border: 1px solid rgba($white, 0.5);
-                    border-bottom: 5px solid rgba($white, 0.8);
-
-                    &:hover {
-                        border-bottom: 2px solid rgba($white, 1);
-                        padding-bottom: calc(.5rem + 4px);
-                    }
-                }
+            @media (max-width: 768px) {
+                display: block;
             }
         }
     }
@@ -194,9 +181,16 @@ body {
         padding: 1rem 1rem 0;
         margin: 3rem 0 0;
 
-        font-family: 'NewTelegraphBold', sans-serif;
-        background-color: $blue;
+        font-family: 'Inter', sans-serif;
+        background-color: $black;
         color: $white;
+
+        .gradient {
+            background: $gradient;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
 
         section {
             display: flex;
