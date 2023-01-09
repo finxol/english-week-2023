@@ -54,7 +54,7 @@ const parseDate = (date: string) => {
 
 let nextSpeaker = speakers.find(speaker => new Date(speaker.date).getTime() > Date.now());
 
-const delay = ({ hours = 0, days = 0, date = Date.now() } = {}) => {
+const delay = ({hours = 0, days = 0, date = Date.now()} = {}) => {
     let d = new Date(date);
     d.setHours(d.getHours() - hours)
     d.setDate(d.getDate() - days)
@@ -81,15 +81,20 @@ onBeforeMount(() => {
                 and a <span class="gradient strong">quiz</span>!<br>
             </p>-->
 
-            <p class="primary-text">
-                <span class="Line1">English</span>
-                <span class="Line2">Week <span class="gradient">2023</span></span>
-            </p>
+            <div class="primary-text">
+                <p class="left">
+                    <span>English</span>
+                    <span>Week</span>
+                </p>
+                <p class="right">
+                    <span class="gradient">2023</span>
+                </p>
+            </div>
 
             <p class="secondary-text">
                 <span class="description">When & Where ?</span><br>
                 <span class="date">January 30 <span class="gradient">•</span> February 3 <br> <span
-                        class="gradient">Online</span></span>
+                    class="gradient">Online</span></span>
             </p>
 
         </div>
@@ -111,18 +116,20 @@ onBeforeMount(() => {
                     world of IT.<br>
                 </li>
                 <li>
-                    Each year, the student committee of the computer science department organizes a week of conferences
-                    and a quiz and every teachers are encouraged to teach their regular class in english
+                    Each year, the student committee of the computer science department organizes a week of conferences,
+                    a quiz, and encourages every teacher to teach their regular class in English.
                 </li>
                 <li>
-                    A great lineup of speakers to talk about various subjects, ranging from
-                    cybersecurity to web design, data protection and even AI!
-                    With these talk, you get to learn more about these topics, and also improve your English skills!
-
+                    There is an incredible lineup of speakers who will be sharing their expertise on a variety of
+                    subjects, such as cybersecurity, web design, data protection, and even AI! These talks are not only
+                    a chance to deepen your understanding of these exciting topics, but also a fantastic opportunity to
+                    hone your English skills. Don't miss out on this amazing learning experience!
                 </li>
                 <hr class="separator-small">
-                <div class="small">Every speakers are invited by the computer science department student committee
-                    therefore they are not always affiliated with the school.</div>
+                <div class="small">
+                    The speakers at the English Week events are invited by the student committee of the computer science
+                    department and may not necessarily be affiliated with the school.
+                </div>
             </ol>
 
         </div>
@@ -135,7 +142,7 @@ onBeforeMount(() => {
                 <div class="speaker" v-for="speaker in speakers" :key="speaker.name">
                     <div class="speaker-card">
                         <div class="speaker-title">{{ speaker.title }}</div>
-                        
+
                         <div class="speaker-info">
                             <img :src="speaker.img.includes('https://') ? speaker.img : `/speakers/${speaker.img}`"
                                 :alt="speaker.name" class="speaker-img">
@@ -151,7 +158,7 @@ onBeforeMount(() => {
                         <div class="speaker-first">
                             <div class="speaker-image">
                                 <img :src="speaker.img.includes('https://') ? speaker.img : `/speakers/${speaker.img}`"
-                                    :alt="speaker.name">
+                                     :alt="speaker.name">
                             </div>
                             <div class="speaker-name">{{ speaker.name }}</div>
                         </div>
@@ -202,9 +209,8 @@ div.page {
         height: 60vh;
         flex-direction: row;
         justify-content: space-evenly;
-        margin: 1rem 3rem;
+        margin: 1rem 3rem 20rem;
         color: $white;
-        margin-bottom: 20rem;
 
         @media screen and (max-width: 768px) {
             flex-direction: column;
@@ -212,23 +218,32 @@ div.page {
         }
 
         .primary-text {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            gap: 1rem;
+            align-self: center;
             max-width: 60rem;
             text-align: center;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 7.5rem;
             letter-spacing: .1rem;
-            align-self: center;
 
-            .Line1 {
-                display: block;
-                text-align: left;
+            .left {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: flex-end;
+                font-size: inherit;
             }
 
-            .Line2 {
-                display: block;
-                text-align: right;
-                padding-left: 4rem;
+            .right {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: flex-start;
+                font-size: inherit;
             }
         }
 
@@ -242,7 +257,7 @@ div.page {
                 display: inline-block;
                 font-size: 1.5rem;
                 font-weight: 600;
-                margin-bottom: rem;
+                margin-bottom: 0;
                 text-align: left;
             }
 
@@ -339,30 +354,28 @@ div.page {
             counter-reset: li;
 
             li {
-                counter-increment: li;
-                font-size: 1.3rem;
-                margin-top: 1rem;
-                margin-bottom: 1rem;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-            }
+                justify-content: flex-start;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                counter-increment: li;
+                font-size: 1.3rem;
 
-            li::marker {
-                visibility: hidden;
-            }
+                &::marker {
+                    visibility: hidden;
+                }
 
-            li::before {
-                content: counter(li) '';
-                background: linear-gradient(120deg, rgba(253, 29, 29, 1) 0%, rgb(69, 69, 252) 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                display: inline-block;
-                width: 1em;
-                margin-left: -1em;
-                font-size: 4rem;
-                font-weight: 600;
-                margin-right: 1rem;
+                &::before {
+                    content: counter(li);
+                    width: 4rem;
+                    background: linear-gradient(120deg, rgba(253, 29, 29, 1) 0%, rgb(69, 69, 252) 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-size: 4rem;
+                    font-weight: 600;
+                }
             }
 
             .small {
@@ -375,7 +388,6 @@ div.page {
                 height: 1px;
                 background-color: #ffffffb3;
             }
-
 
 
         }
@@ -431,12 +443,13 @@ div.page {
                         flex-direction: row;
                         height: 10vh;
                         border: $white 2px solid;
+
                         .speaker-name {
                             font-size: 2rem;
                             font-family: 'Inter', sans-serif;
                             color: $white;
                             margin-right: 1rem;
-                            align-self:center;
+                            align-self: center;
                             margin-left: 1rem;
                         }
                     }
@@ -445,14 +458,14 @@ div.page {
                         display: flex;
                         flex-direction: column;
                         height: 10vh;
-                        
+
 
                         .speaker-title {
                             padding: 30px;
                             font-size: 1.2rem;
                             font-family: 'Inter', sans-serif;
                             color: $white;
-                            align-self:center;
+                            align-self: center;
                             border: $white 2px solid;
                             width: 100%;
                             border-top: none;
@@ -467,16 +480,12 @@ div.page {
                             border: $white 2px solid;
                             border-top: none;
                             text-align: end;
-                            
+
                         }
                     }
 
 
-
                 }
-
-
-
 
 
                 .speaker-image img {
