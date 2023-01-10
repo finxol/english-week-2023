@@ -99,19 +99,26 @@ onBeforeMount(() => {
 
             <p class="secondary-text">
                 <span class="description">When & Where ?</span><br>
-                <span class="date">January 30 <span class="gradient">•</span> February 3 <br> <span
-                    class="gradient">Online</span></span>
+                <span class="date">
+                    January 30
+                    <span class="gradient">•</span>
+                    February 3 <br>
+                    <span class="gradient">Online</span>
+                </span>
             </p>
 
         </div>
 
         <!-- set to 1 week before first stream -->
-        <div v-if="new Date() < delay({ days: 7, date: nextSpeaker.date })" class="stream">
+        <div v-if="new Date() > delay({ days: 7, date: nextSpeaker.date })" class="stream">
             <p class="next">
                 Next talk will be from <b>{{ nextSpeaker.name }}</b> on <b>{{ parseDate(nextSpeaker.date) }}</b>
             </p>
 
-            <iframe title="Test" src="https://tube.gnous.eu/videos/embed/0e6f37ea-8331-4e40-89b6-5d374c5150de?title=0&amp;warningTitle=0&amp;peertubeLink=0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>
+            <iframe title="Test"
+                    src="https://tube.gnous.eu/videos/embed/0e6f37ea-8331-4e40-89b6-5d374c5150de?title=0&amp;warningTitle=0&amp;peertubeLink=0"
+                    allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315"
+                    frameborder="0"></iframe>
         </div>
         <div id="about" class="scroll-anchor"></div>
         <div class="intro">
@@ -177,7 +184,7 @@ onBeforeMount(() => {
                         {{ speaker.description }}
                     </p>
                     <p class="container">
-                        {{ speaker.confirmed ? '' : '~ '}}
+                        {{ speaker.confirmed ? '' : '~ ' }}
                         {{ parseDate(speaker.date) }}
                     </p>
                 </div>
@@ -199,7 +206,9 @@ onBeforeMount(() => {
 .gradient {
     background: $gradient;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 .strong {
