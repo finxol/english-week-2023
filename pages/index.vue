@@ -106,12 +106,12 @@ onBeforeMount(() => {
         </div>
 
         <!-- set to 1 week before first stream -->
-        <div v-if="new Date() > delay({ days: 7, date: nextSpeaker.date })" class="stream">
+        <div v-if="new Date() < delay({ days: 7, date: nextSpeaker.date })" class="stream">
             <p class="next">
                 Next talk will be from <b>{{ nextSpeaker.name }}</b> on <b>{{ parseDate(nextSpeaker.date) }}</b>
             </p>
 
-
+            <iframe title="Test" src="https://tube.gnous.eu/videos/embed/0e6f37ea-8331-4e40-89b6-5d374c5150de?title=0&amp;warningTitle=0&amp;peertubeLink=0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315" frameborder="0"></iframe>
         </div>
         <div id="about" class="scroll-anchor"></div>
         <div class="intro">
