@@ -15,7 +15,6 @@ let speakers: Speaker[] = reactive([
     {
         name: "Ayça Atabey",
         title: "Data protection, AI, and human rights issues",
-        description: `This presentation will be a talk about a very interesting subject.`,
         date: "2023-02-01T17:45:00.000+01:00",
         url: "https://www.turing.ac.uk/people/enrichment-students/ayca-atabey",
         linkedin: "https://www.linkedin.com/in/ayca-atabey/",
@@ -28,6 +27,7 @@ let speakers: Speaker[] = reactive([
         description: "Adversarially encoding text can cause lots of problems. In this talk, we will explore recent research into attacking real-world systems ranging from machine learning models to compilers by leveraging obscure text encodings.",
         date: "2023-01-30T17:45:00.000+01:00",
         confirmed: true,
+        url: "https://www.cl.cam.ac.uk/~ndb40/",
         linkedin: "https://www.linkedin.com/in/bouchernicholas/",
         img: "https://www.cl.cam.ac.uk/~ndb40/assets/img/boucher.webp?h=8fa366f4b743a2c305532241cd0d30ea",
         expand: false,
@@ -36,13 +36,13 @@ let speakers: Speaker[] = reactive([
         name: "Colin Ozanne",
         title: "Designing Effective Web Interfaces: Tips and Techniques",
         description: `In this talk, we will explore the key principles of design and how they can be applied to create visually appealing and intuitive web interfaces. We will also delve into techniques for building responsive websites that work well on a variety of devices, and discuss the importance of accessibility and performance in web design. We will cover practical tips and techniques for optimizing the usability of your website, including how to create clear and concise content, design effective calls to action, and conduct user testing. By the end of the talk, you will have a solid understanding of how to design and build web interfaces that are both visually appealing and user-friendly.`,
-        date: "2023-02-05T05:00:00.000+01:00",
+        date: "2023-02-02T17:45:00.000+01:00",
         url: "https://colinozanne.fr/",
         linkedin: "https://www.linkedin.com/in/colin-ozanne-99594822a/",
-        img: "https://avatars.githubusercontent.com/u/71637999?v=4",
+        img: "https://www.krhacken.fr/_next/image?url=%2Fassets%2Fcolin.png&w=256&q=75",
         expand: false,
     }
-]).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()));
 
 
 const parseDate = (date: string) => {
@@ -58,7 +58,11 @@ const parseDate = (date: string) => {
     return new Date(date).toLocaleDateString('en-GB', options);
 }
 
-let nextSpeaker = speakers.find(speaker => new Date(speaker.date).getTime() > Date.now());
+let nextSpeaker = speakers.find(speaker => {
+    let d = new Date(speaker.date);
+    d.setHours(d.getHours() + 1);
+    return d.getTime() > Date.now()
+});
 
 const delay = ({hours = 0, days = 0, date = Date.now()} = {}) => {
     let d = new Date(date);
@@ -110,19 +114,30 @@ onBeforeMount(() => {
         </div>
 
         <!-- set to 1 week before first stream -->
-        <div v-if="new Date() > delay({ days: 7, date: nextSpeaker.date })" class="stream">
+        <div
+            v-if="new Date() > delay({ days: 7, date: speakers[0].date })"
+            class="stream"
+        >
             <p class="next">
-                Next talk will be from <b>{{ nextSpeaker.name }}</b> on <b>{{ parseDate(nextSpeaker.date) }}</b>
+                Next talk is from <b>{{ nextSpeaker.name }}</b> on <b>{{ parseDate(nextSpeaker.date) }}</b>
             </p>
 
-            <iframe title="Test"
-                    src="https://tube.gnous.eu/videos/embed/0e6f37ea-8331-4e40-89b6-5d374c5150de?title=0&amp;warningTitle=0&amp;peertubeLink=0"
-                    allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315"
-                    frameborder="0"></iframe>
+            <iframe
+                v-if="new Date() > delay({ hours: 0.5, date: nextSpeaker.date }) && new Date() < delay({ hours: -1, date: nextSpeaker.date })"
+                title="English Week live Conference"
+                src="https://live.krhacken.fr/videos/embed/956548a7-dabf-45f4-acae-67d924549482?title=0&amp;warningTitle=0&amp;peertubeLink=0"
+                allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315"
+                frameborder="0">
+            </iframe>
         </div>
+
+
         <div id="about" class="scroll-anchor"></div>
         <div class="intro">
-            <span class="about-title">What exactly is the <br><span class="gradient strong">english week ?</span></span>
+            <span class="about-title">
+                What exactly is the <br>
+                <span class="gradient strong">english week ?</span>
+            </span>
             <ol class="about-content">
                 <li>
                     The English Week is the perfect opportunity to improve your English skills and learn more about the
@@ -164,13 +179,30 @@ onBeforeMount(() => {
                             :alt="speaker.name"
                         />
                         <p>
-                            {{ speaker.name }}
+                            <a
+                                v-if="speaker.linkedin"
+                                :href="speaker.linkedin"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-brands fa-linkedin"
+                                />
+                            </a>
+                            <a
+                                :href="speaker.url"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {{ speaker.name }}
+                            </a>
                         </p>
                     </div>
                     <p class="container emph">
                         {{ speaker.title }}
 
                         <span
+                            v-if="speaker.description"
                             class="expand-control"
                             @click="speaker.expand = !speaker.expand"
                         >
@@ -215,7 +247,6 @@ onBeforeMount(() => {
 }
 
 div.page {
-    padding-top: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -226,10 +257,10 @@ div.page {
     div.head {
         width: 100%;
         display: flex;
-        height: 60vh;
+        height: calc(100vh - 10rem - 10rem);
         flex-direction: row;
         justify-content: space-evenly;
-        margin: 1rem 3rem 20rem;
+        margin: 1rem 3rem 9rem;
         color: $white;
 
         @media screen and (max-width: 768px) {
@@ -322,7 +353,7 @@ div.page {
     div.stream {
         width: 100%;
         padding: 1rem 9rem;
-        margin: 2rem 0 0;
+        margin: 0;
         background-color: rgba($red, .1);
         text-align: center;
         line-height: 1.6rem;
@@ -331,16 +362,21 @@ div.page {
             padding: 1rem 3rem;
         }
 
-    p.next {
-      font-size: 1.5rem;
-      font-family: "Inter", sans-serif;
-      color: $white;
+        p.next {
+            font-size: 1.5rem;
+            font-family: "Inter", sans-serif;
+            color: $white;
+
+            b {
+                color: lighten($blue, 12%);
+            }
+        }
     }
-  }
 
     div.intro {
         width: 100%;
         height: 70vh;
+        margin-top: 8rem;
         padding: 1rem 9rem;
         display: flex;
         flex-direction: row;
@@ -383,26 +419,26 @@ div.page {
                     visibility: hidden;
                 }
 
-        &::before {
-          display: inline-block;
-          content: counter(li);
-          width: 4rem;
-          background: linear-gradient(
-            120deg,
-            rgba(253, 29, 29, 1) 0%,
-            rgb(69, 69, 252) 100%
-          );
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          font-size: 4rem;
-          font-weight: 600;
-          margin-right: 1.5rem;
-        }
+                &::before {
+                    display: inline-block;
+                    content: counter(li);
+                    width: 4rem;
+                    background: linear-gradient(
+                            120deg,
+                            rgba(253, 29, 29, 1) 0%,
+                            rgb(69, 69, 252) 100%
+                    );
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-size: 4rem;
+                    font-weight: 600;
+                    margin-right: 1.5rem;
+                }
 
-        &:first-child::before {
-            margin-right: 0;
-        }
-      }
+                &:first-child::before {
+                    margin-right: 0;
+                }
+            }
 
             .small {
                 font-size: 1rem;
@@ -483,6 +519,12 @@ div.page {
                         margin: 0 4rem;
                         font-size: 2rem;
                         font-family: 'Inter', sans-serif;
+
+                        .fa-linkedin {
+                            margin-right: 1rem;
+                            margin-bottom: .08rem;
+                            font-size: 1.6rem;
+                        }
                     }
                 }
 
