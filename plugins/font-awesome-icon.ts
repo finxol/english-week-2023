@@ -11,6 +11,7 @@ library.add(faSolid.faGraduationCap)
 library.add(faSolid.faStar)
 library.add(faSolid.faStarHalf)
 library.add(faSolid.faStarHalfAlt)
+library.add(faSolid.faCalendarDay)
 
 library.add(regular.faStar)
 
