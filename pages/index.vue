@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 interface Speaker {
     name: string,
     title: string,
@@ -119,15 +119,17 @@ onBeforeMount(() => {
             class="stream"
         >
             <p class="next">
-                Next talk is from <b>{{ nextSpeaker.name }}</b> on <b>{{ parseDate(nextSpeaker.date) }}</b>
+                Next talk will be from
+                <span class="gradient strong">{{ nextSpeaker.name }}</span> on
+                <span class="gradient strong">{{ parseDate(nextSpeaker.date) }}</span>
             </p>
 
             <iframe
                 v-if="new Date() > delay({ hours: 0.5, date: nextSpeaker.date }) && new Date() < delay({ hours: -1, date: nextSpeaker.date })"
-                title="English Week live Conference"
-                src="https://live.krhacken.fr/videos/embed/956548a7-dabf-45f4-acae-67d924549482?title=0&amp;warningTitle=0&amp;peertubeLink=0"
-                allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups" width="560" height="315"
-                frameborder="0">
+                allowfullscreen=""
+                frameborder="0"
+                height="315" sandbox="allow-same-origin allow-scripts allow-popups" src="https://live.krhacken.fr/videos/embed/956548a7-dabf-45f4-acae-67d924549482?title=0&amp;warningTitle=0&amp;peertubeLink=0" title="English Week live Conference"
+                width="560">
             </iframe>
         </div>
 
@@ -162,28 +164,41 @@ onBeforeMount(() => {
 
         </div>
 
-        <div class="speakers" id="speakers">
+        <div
+            id="speakers"
+            class="speakers"
+        >
             <h2>Talks</h2>
             <small>All times are shown in CET (Central European Time)</small>
             <small>Unconfirmed dates & times are marked with ~</small>
-            <section class="speaker-container">
+
+            <section
+                class="speaker-container"
+            >
                 <div
-                    class="speaker-card"
                     v-for="speaker in speakers"
                     :key="speaker.name"
+                    class="speaker-card"
                 >
-                    <div class="speaker-card-header">
-                        <img
-                            class="speaker-img"
-                            :src="speaker.img"
-                            :alt="speaker.name"
-                        />
-                        <p>
+                    <div
+                        class="card-container"
+                    >
+                        <div
+                            class="user-image"
+                        >
+                            <img
+                                :alt="speaker.name"
+                                :src="speaker.img"
+                                class="speaker-img"/>
+                        </div>
+                        <h2
+                            class="user-name"
+                        >
                             <a
                                 v-if="speaker.linkedin"
                                 :href="speaker.linkedin"
-                                target="_blank"
                                 rel="noopener noreferrer"
+                                target="_blank"
                             >
                                 <font-awesome-icon
                                     icon="fa-brands fa-linkedin"
@@ -191,41 +206,45 @@ onBeforeMount(() => {
                             </a>
                             <a
                                 :href="speaker.url"
-                                target="_blank"
                                 rel="noopener noreferrer"
+                                target="_blank"
                             >
                                 {{ speaker.name }}
                             </a>
+                        </h2>
+                        <p
+                            class="gradient strong"
+                            style="text-align: center"
+                        >
+                            {{ speaker.confirmed ? "" : "~ " }} {{ parseDate(speaker.date) }}
                         </p>
-                    </div>
-                    <p class="container emph">
-                        {{ speaker.title }}
-
+                        <p
+                            class="about-user strong"
+                        >
+                            {{ speaker.title }}
+                        </p>
                         <span
                             v-if="speaker.description"
                             class="expand-control"
                             @click="speaker.expand = !speaker.expand"
                         >
-                                {{ speaker.expand ? 'Read less' : 'Read more' }}
-                            </span>
-                    </p>
-                    <p
-                        class="container expand"
-                        v-if="speaker.expand"
-                    >
-                        {{ speaker.description }}
-                    </p>
-                    <p class="container">
-                        {{ speaker.confirmed ? '' : '~ ' }}
-                        {{ parseDate(speaker.date) }}
-                    </p>
+                            {{ speaker.expand ? "Hide" : "Show" }} details
+                        </span>
+
+                        <p
+                            v-if="speaker.expand"
+                            class="speaker-description"
+                        >
+                            {{ speaker.description }}
+                        </p>
+                    </div>
                 </div>
             </section>
         </div>
     </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "assets/css/main.scss";
 
 .scroll-anchor {
@@ -353,8 +372,8 @@ div.page {
     div.stream {
         width: 100%;
         padding: 1rem 9rem;
-        margin: 0;
-        background-color: rgba($red, .1);
+        margin: 2rem 0 0;
+        background-color: $black;
         text-align: center;
         line-height: 1.6rem;
 
@@ -467,8 +486,8 @@ div.page {
         text-align: left;
 
         h2 {
-            font-size: 2.7rem;
-            font-family: 'NewTelegraphBold', sans-serif;
+            font-size: 3.5rem;
+            font-family: "Inter", sans-serif;
             color: $white;
             margin-bottom: 1rem;
         }
@@ -483,79 +502,64 @@ div.page {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            gap: 2rem;
             flex-wrap: wrap;
-            margin: 2rem 2rem 0;
+            gap: 4rem;
+            margin: 6rem 6rem 0;
 
-            .speaker-card {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: stretch;
-                align-self: flex-start;
+            .card-container {
+                background-color: rgb(31, 31, 32);
+                color: white;
+                padding: 2rem;
+                width: 25rem;
+                height: 30rem;
+                margin: 0.5rem;
+                border-radius: 0.4rem;
+                overflow: auto;
+            }
+
+            .user-image {
+                position: relative;
+                width: 100px;
+                height: 100px;
+                margin: 0 auto;
+            }
+
+            .user-image img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .user-name,
+            .about-user {
+                text-align: center;
+                margin-top: 1.5rem;
+            }
+
+            .user-name {
+                font-size: 1.4rem;
+
+                svg.fa-linkedin {
+                    margin-right: .5rem;
+                }
+            }
+
+            span.expand-control {
+                display: block;
+                margin-top: 1rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-decoration: underline;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .speaker-description {
                 text-align: justify;
-
-                width: 40rem;
-                border-radius: 1rem;
-                border: $white 2px solid;
-                overflow: hidden;
-
-                .speaker-card-header {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    align-items: center;
-
-                    border-radius: 1rem 1rem 0 0;
-                    border: $white 1px solid;
-
-                    img {
-                        width: 10rem;
-                        aspect-ratio: 1;
-                        object-fit: cover;
-                    }
-
-                    p {
-                        margin: 0 4rem;
-                        font-size: 2rem;
-                        font-family: 'Inter', sans-serif;
-
-                        .fa-linkedin {
-                            margin-right: 1rem;
-                            margin-bottom: .08rem;
-                            font-size: 1.6rem;
-                        }
-                    }
-                }
-
-                p.container {
-                    margin: 0;
-                    border: $white 1px solid;
-                    padding: 1rem;
-                    font-size: 1rem;
-                    white-space: normal;
-
-                    &.emph {
-                        padding: 2rem 1rem;
-                        font-size: 1.3rem;
-                    }
-
-                    &:last-child {
-                        padding-right: 2rem;
-                        text-align: right;
-                        border-radius: 0 0 1rem 1rem;
-                    }
-
-                    span.expand-control {
-                        display: block;
-                        margin-top: 1rem;
-                        font-size: .8rem;
-                        font-weight: 600;
-                        text-decoration: underline;
-                        text-align: center;
-                        cursor: pointer;
-                    }
-                }
             }
         }
     }
