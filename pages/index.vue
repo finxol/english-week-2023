@@ -194,8 +194,7 @@ onBeforeMount(() => {
 </template>
 
 <style scoped lang="scss">
-@import 'assets/css/main.scss';
-
+@import "assets/css/main.scss";
 
 .scroll-anchor {
     visibility: hidden;
@@ -332,16 +331,12 @@ div.page {
             padding: 1rem 3rem;
         }
 
-        p.next {
-            font-size: 1.5rem;
-            font-family: 'NewTelegraphBold', sans-serif;
-            color: $blue;
-
-            b {
-                color: $red;
-            }
-        }
+    p.next {
+      font-size: 1.5rem;
+      font-family: "Inter", sans-serif;
+      color: $white;
     }
+  }
 
     div.intro {
         width: 100%;
@@ -388,16 +383,26 @@ div.page {
                     visibility: hidden;
                 }
 
-                &::before {
-                    content: counter(li);
-                    width: 4rem;
-                    background: linear-gradient(120deg, rgba(253, 29, 29, 1) 0%, rgb(69, 69, 252) 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    font-size: 4rem;
-                    font-weight: 600;
-                }
-            }
+        &::before {
+          display: inline-block;
+          content: counter(li);
+          width: 4rem;
+          background: linear-gradient(
+            120deg,
+            rgba(253, 29, 29, 1) 0%,
+            rgb(69, 69, 252) 100%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-size: 4rem;
+          font-weight: 600;
+          margin-right: 1.5rem;
+        }
+
+        &:first-child::before {
+            margin-right: 0;
+        }
+      }
 
             .small {
                 font-size: 1rem;
