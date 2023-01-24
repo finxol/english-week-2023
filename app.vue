@@ -32,7 +32,11 @@ const toggleMenu = () => {
 
         <footer>
             <section id="links">
-                <a href="https://www.iutvannes.fr" target="_blank" rel="noopener noreferrer">
+                <a
+                    href="https://www.iutvannes.fr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     <picture>
                         <source
                             srcset="/logo_iut_vannes_white.webp"
@@ -40,6 +44,16 @@ const toggleMenu = () => {
                         />
                         <img src="/logo_iut_vannes_white.png" alt="IUT Vannes">
                     </picture>
+                </a>
+
+                <a
+                    href="https://calendar.proton.me/api/calendar/v1/url/aKyIbmfWtecC6eiUjf1wxYgWGZHpgzY0mxlmCQwoMDOXbjPZT2SXJYxqKmX8XkX0qE_vJq3OPP_1o9uZfOHafw==/calendar.ics?CacheKey=lK9aL4GLBgmsmxtDFFGiaA%3D%3D&PassphraseKey=EddFrmYGO9Zgtr5Nq7mKYIrSOzhfNekKKXm_0J0CmQo%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <font-awesome-icon
+                        icon="fa-solid fa-calendar-day"
+                    />
                 </a>
             </section>
             <p>
@@ -63,7 +77,11 @@ const toggleMenu = () => {
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
 @import 'assets/fonts/new-telegraph/new-telegraph.css';
-@import "assets/css/main.scss";
+@import 'assets/css/main.scss';
+
+::selection {
+    background-color: rgba($blue, 0.5);
+}
 
 ::-webkit-scrollbar {
     width: 20px;
@@ -102,6 +120,11 @@ body {
 
     * {
         box-sizing: border-box;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
     }
 
     header {
@@ -208,9 +231,34 @@ body {
             justify-content: center;
             align-items: center;
             gap: 1rem;
+            color: $white;
+
+            a {
+                text-decoration: none;
+                color: $white;
+                font-size: 1.8rem;
+
+                transition: transform, background-color;
+                transition-timing-function: ease;
+                transition-duration: 400ms;
+
+                &:hover {
+                    transform: scale(1.06);
+                }
+
+                &:active {
+                    transform: scale(0.91);
+                }
+            }
+
+            picture,
+            img,
+            svg {
+                height: 3rem;
+            }
 
             img {
-                height: 3rem;
+                margin-bottom: -.5rem;
             }
         }
 
