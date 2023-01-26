@@ -37,6 +37,7 @@ let speakers: Speaker[] = reactive([
         title: "Designing Effective Web Interfaces: Tips and Techniques",
         description: `In this talk, we will explore the key principles of design and how they can be applied to create visually appealing and intuitive web interfaces. We will also delve into techniques for building responsive websites that work well on a variety of devices, and discuss the importance of accessibility and performance in web design. We will cover practical tips and techniques for optimizing the usability of your website, including how to create clear and concise content, design effective calls to action, and conduct user testing. By the end of the talk, you will have a solid understanding of how to design and build web interfaces that are both visually appealing and user-friendly.`,
         date: "2023-02-02T17:45:00.000+01:00",
+        confirmed: true,
         url: "https://colinozanne.fr/",
         linkedin: "https://www.linkedin.com/in/colin-ozanne-99594822a/",
         img: "https://www.krhacken.fr/_next/image?url=%2Fassets%2Fcolin.png&w=256&q=75",
@@ -170,7 +171,7 @@ onBeforeMount(() => {
         >
             <h2>Talks</h2>
             <small>All times are shown in CET (Central European Time)</small>
-            <small>Unconfirmed dates & times are marked with ~</small>
+<!--            <small>Unconfirmed dates & times are marked with ~</small>-->
 
             <section
                 class="speaker-container"
@@ -216,7 +217,7 @@ onBeforeMount(() => {
                             class="gradient strong"
                             style="text-align: center"
                         >
-                            {{ speaker.confirmed ? "" : "~ " }} {{ parseDate(speaker.date) }}
+<!--                            {{ speaker.confirmed ? "" : "~ " }} -->{{ parseDate(speaker.date) }}
                         </p>
                         <p
                             class="about-user strong"
@@ -284,13 +285,14 @@ div.page {
 
         @media screen and (max-width: 768px) {
             flex-direction: column;
-            margin-top: 0;
+            margin-top: 3rem;
         }
 
         .primary-text {
             display: flex;
             justify-content: flex-end;
             align-items: flex-end;
+            flex-direction: row;
             gap: 1rem;
             align-self: center;
             max-width: 60rem;
@@ -300,12 +302,23 @@ div.page {
             font-size: 7.5rem;
             letter-spacing: .1rem;
 
+            @media (max-width: 768px) {
+                margin: 5rem 0;
+                flex-direction: column;
+                font-size: 5rem;
+            }
+
             .left {
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-end;
                 align-items: flex-end;
                 font-size: inherit;
+
+                @media (max-width: 768px) {
+                    margin: 0;
+                    align-items: flex-start;
+                }
             }
 
             .right {
@@ -314,14 +327,21 @@ div.page {
                 justify-content: flex-end;
                 align-items: flex-start;
                 font-size: inherit;
+
+                @media (max-width: 768px) {
+                    margin: 0;
+                    align-items: flex-end;
+                }
             }
         }
 
         .secondary-text {
-            align-self: end;
+            align-self: center;
+            padding: 1rem;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
             color: #ffffffb3;
+            width: max-content;
 
             .description {
                 display: inline-block;
@@ -329,6 +349,10 @@ div.page {
                 font-weight: 600;
                 margin-bottom: 0;
                 text-align: left;
+
+                @media (max-width: 768px) {
+                    font-size: 1rem;
+                }
             }
 
             .date {
@@ -336,7 +360,11 @@ div.page {
                 font-size: 2rem;
                 font-weight: 600;
                 margin-bottom: 1rem;
-                text-align: left;
+                text-align: right;
+
+                @media (max-width: 768px) {
+                    font-size: 1.5rem;
+                }
             }
         }
 
@@ -378,7 +406,7 @@ div.page {
         line-height: 1.6rem;
 
         @media screen and (max-width: 768px) {
-            padding: 1rem 3rem;
+            padding: 1rem;
         }
 
         p.next {
@@ -386,8 +414,22 @@ div.page {
             font-family: "Inter", sans-serif;
             color: $white;
 
-            b {
-                color: lighten($blue, 12%);
+            @media (max-width: 768px) {
+                padding: 0 2rem;
+
+                span.gradient {
+                    display: block;
+                    margin: 1rem 0;
+                }
+            }
+        }
+
+        iframe {
+            @media (max-width: 768px) {
+                margin-top: 2rem;
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16/9;
             }
         }
     }
@@ -408,6 +450,7 @@ div.page {
             padding: 1rem 2rem;
             flex-direction: column;
             gap: 0;
+            height: auto;
         }
 
         .about-title {
@@ -416,6 +459,18 @@ div.page {
             font-family: 'Inter', sans-serif;
             color: $white;
             width: 100%;
+
+            @media (max-width: 768px) {
+                font-size: 2.5rem;
+
+                br {
+                    display: none;
+                }
+
+                .gradient {
+                    display: inline;
+                }
+            }
         }
 
         .about-content {
@@ -423,6 +478,10 @@ div.page {
             flex-direction: column;
             list-style: none;
             counter-reset: li;
+
+            @media (max-width: 768px) {
+                padding: .5rem;
+            }
 
             li {
                 display: flex;
@@ -434,6 +493,10 @@ div.page {
                 counter-increment: li;
                 font-size: 1.3rem;
 
+                @media (max-width: 768px) {
+                    font-size: 1.1rem;
+                }
+
                 &::marker {
                     visibility: hidden;
                 }
@@ -441,7 +504,7 @@ div.page {
                 &::before {
                     display: inline-block;
                     content: counter(li);
-                    width: 4rem;
+                    width: 2.5rem;
                     background: linear-gradient(
                             120deg,
                             rgba(253, 29, 29, 1) 0%,
@@ -456,6 +519,10 @@ div.page {
 
                 &:first-child::before {
                     margin-right: 0;
+
+                    @media (max-width: 768px) {
+                        margin-right: 2rem;
+                    }
                 }
             }
 
@@ -506,6 +573,11 @@ div.page {
             gap: 4rem;
             margin: 6rem 6rem 0;
 
+            @media (max-width: 768px) {
+                margin: 4rem 0 0;
+                gap: 2rem;
+            }
+
             .card-container {
                 background-color: rgb(31, 31, 32);
                 color: white;
@@ -515,51 +587,55 @@ div.page {
                 margin: 0.5rem;
                 border-radius: 0.4rem;
                 overflow: auto;
-            }
 
-            .user-image {
-                position: relative;
-                width: 100px;
-                height: 100px;
-                margin: 0 auto;
-            }
-
-            .user-image img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                object-fit: cover;
-            }
-
-            .user-name,
-            .about-user {
-                text-align: center;
-                margin-top: 1.5rem;
-            }
-
-            .user-name {
-                font-size: 1.4rem;
-
-                svg.fa-linkedin {
-                    margin-right: .5rem;
+                @media (max-width: 768px) {
+                    width: calc(100% - 1rem);
                 }
-            }
 
-            span.expand-control {
-                display: block;
-                margin-top: 1rem;
-                font-size: 0.8rem;
-                font-weight: 600;
-                text-decoration: underline;
-                text-align: center;
-                cursor: pointer;
-            }
+                .user-image {
+                    position: relative;
+                    width: 100px;
+                    height: 100px;
+                    margin: 0 auto;
+                }
 
-            .speaker-description {
-                text-align: justify;
+                .user-image img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                .user-name,
+                .about-user {
+                    text-align: center;
+                    margin-top: 1.5rem;
+                }
+
+                .user-name {
+                    font-size: 1.4rem;
+
+                    svg.fa-linkedin {
+                        margin-right: .5rem;
+                    }
+                }
+
+                span.expand-control {
+                    display: block;
+                    margin-top: 1rem;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    text-decoration: underline;
+                    text-align: center;
+                    cursor: pointer;
+                }
+
+                .speaker-description {
+                    text-align: justify;
+                }
             }
         }
     }

@@ -137,14 +137,12 @@ body {
         align-items: center;
         height: 5rem;
         width: 100vw;
-        overflow: hidden;
 
         font-family: 'Poppins', sans-serif;
         background-color: $black;
         color: $white;
 
         @media (max-width: 768px) {
-            grid-template-columns: repeat(2, 1fr);
             padding-left: 1.5rem;
             height: 4rem;
         }
@@ -158,6 +156,7 @@ body {
 
             @media (max-width: 768px) {
                 grid-column: 1 / 1;
+                font-size: 1rem;
             }
 
             .gradient {
@@ -173,34 +172,35 @@ body {
             align-self: center;
             justify-self: center;
             display: flex;
+            display: none;
 
             @media (max-width: 768px) {
                 grid-column: 2 / 2;
             }
 
-        }
+            nav {
+                @media (max-width: 768px) {
+                    display: none;
+                }
 
-        nav > a {
-            margin: 0 1rem;
-            text-decoration: none;
-            color: $white;
-        }
+                a {
+                    margin: 0 1rem;
+                    text-decoration: none;
+                    color: $white;
+                }
+            }
 
-        nav {
-            @media (max-width: 768px) {
+            .menu {
                 display: none;
+                font-size: 2rem;
+                cursor: pointer;
+
+                @media (max-width: 768px) {
+                    display: block;
+                }
             }
         }
 
-        .menu {
-            display: none;
-            font-size: 2rem;
-            cursor: pointer;
-
-            @media (max-width: 768px) {
-                display: block;
-            }
-        }
     }
 
     main {
@@ -255,6 +255,10 @@ body {
             img,
             svg {
                 height: 3rem;
+
+                @media (max-width: 768px) {
+                    height: 2rem;
+                }
             }
 
             img {
@@ -263,6 +267,8 @@ body {
         }
 
         p {
+            text-align: center;
+
             a {
                 color: $white;
             }
