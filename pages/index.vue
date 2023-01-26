@@ -14,11 +14,11 @@ interface Speaker {
 let speakers: Speaker[] = reactive([
     {
         name: "Ayça Atabey",
-        title: "Data protection, AI, and human rights issues",
+        title: "An interdisciplinary look at 'fairness': designing rights-respecting Emotion AI-driven technologies for vulnerable groups ",
         date: "2023-02-01T17:45:00.000+01:00",
         url: "https://www.turing.ac.uk/people/enrichment-students/ayca-atabey",
         linkedin: "https://www.linkedin.com/in/ayca-atabey/",
-        img: "https://www.turing.ac.uk/sites/default/files/styles/people/public/2022-08/ayca_atabey.jpg?itok=kyLTNTBb",
+        img: "https://www.turing.ac.uk/sites/default/files/styles/people/public/2022-08/ayca_atabey.jpg",
         expand: false,
     },
     {
@@ -46,8 +46,7 @@ let speakers: Speaker[] = reactive([
 ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()));
 
 
-const parseDate = (date: string) => {
-    const options = {
+const parseDate = (date: string) => new Date(date).toLocaleDateString('en-GB', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -55,9 +54,7 @@ const parseDate = (date: string) => {
         hour: 'numeric',
         minute: '2-digit',
         timeZone: 'Europe/Paris',
-    }
-    return new Date(date).toLocaleDateString('en-GB', options);
-}
+    });
 
 let nextSpeaker = speakers.find(speaker => {
     let d = new Date(speaker.date);
