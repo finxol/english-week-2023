@@ -35,7 +35,7 @@ let speakers: Speaker[] = reactive([
     {
         name: "Colin Ozanne",
         title: "Designing Effective Web Interfaces: Tips and Techniques",
-        description: `In this talk, we will explore the key principles of design and how they can be applied to create visually appealing and intuitive web interfaces. We will also delve into techniques for building responsive websites that work well on a variety of devices, and discuss the importance of accessibility and performance in web design. We will cover practical tips and techniques for optimizing the usability of your website, including how to create clear and concise content, design effective calls to action, and conduct user testing. By the end of the talk, you will have a solid understanding of how to design and build web interfaces that are both visually appealing and user-friendly.`,
+        description: `In this talk, we will explore the key principles of design and how they can be applied to create visually appealing and intuitive web interfaces. We will also delve into techniques for building responsive websites that work well on a variety of devices, and discuss the importance of accessibility and performance in web design. We will cover practical tips and techniques for optimizing the usability of your website, including how to create clear and concise content, and design effective calls to action. By the end of the talk, you will have a solid understanding of how to design and build web interfaces that are both visually appealing and user-friendly.`,
         date: "2023-02-02T17:45:00.000+01:00",
         confirmed: true,
         url: "https://colinozanne.fr/",
