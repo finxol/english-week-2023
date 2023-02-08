@@ -15,7 +15,7 @@ let speakers: Speaker[] = reactive([
     {
         name: "Ayça Atabey",
         title: "An interdisciplinary look at 'fairness': designing rights-respecting Emotion AI-driven technologies for vulnerable groups ",
-        date: "2023-02-01T17:45:00.000+01:00",
+        date: "2023-02-09T17:45:00.000+01:00",
         url: "https://www.turing.ac.uk/people/enrichment-students/ayca-atabey",
         linkedin: "https://www.linkedin.com/in/ayca-atabey/",
         img: "https://www.turing.ac.uk/sites/default/files/styles/people/public/2022-08/ayca_atabey.jpg",
